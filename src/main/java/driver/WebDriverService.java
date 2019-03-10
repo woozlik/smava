@@ -1,8 +1,6 @@
 package driver;
 
-import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -12,10 +10,6 @@ import java.net.URL;
 
 final public class WebDriverService {
     private WebDriver driver;
-
-    static {
-        setupChromeDriver();
-    }
 
     public WebDriverService() {
         initializeDriver();
@@ -37,10 +31,6 @@ final public class WebDriverService {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-    }
-
-    private static void setupChromeDriver() {
-        //ChromeDriverManager.getInstance().setup();
     }
 
     public WebDriver getDriver() {
