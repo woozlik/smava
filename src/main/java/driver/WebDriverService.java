@@ -1,12 +1,14 @@
 package driver;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.OperatingSystem;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-import static io.github.bonigarcia.wdm.OperatingSystem.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 final public class WebDriverService {
     private WebDriver driver;
@@ -22,11 +24,23 @@ final public class WebDriverService {
     private void initializeDriver() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
-        driver = new ChromeDriver(options);
+        options.addArguments("--window-size=1920,1080");
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setBrowserName("chrome");
+        capabilities.setVersion("71.0");
+        capabilities.setCapability("enableVNC", true);
+        capabilities.setCapability("enableVideo", false);
+        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        try {
+            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void setupChromeDriver() {
-        ChromeDriverManager.getInstance().operatingSystem(MAC).arch64().setup();
+        //ChromeDriverManager.getInstance().setup();
     }
 
     public WebDriver getDriver() {
