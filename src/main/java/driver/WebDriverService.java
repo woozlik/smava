@@ -18,12 +18,12 @@ final public class WebDriverService {
 
     private void initializeDriver() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("start-maximized");
+        options.addArguments("--start-fullscreen");
         driver = new ChromeDriver(options);
     }
 
     private static void setupChromeDriver() {
-        ChromeDriverManager.getInstance().setup();
+        ChromeDriverManager.chromedriver().setup();
     }
 
     public WebDriver getDriver() {
